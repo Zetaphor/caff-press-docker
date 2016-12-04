@@ -1,4 +1,6 @@
+# Ignore the directory contents, so we don't commit the database
 mariadb/*
+# But keep the .gitkeep file, effectively keeping the directory
 !mariadb/.gitkeep
 
 redmine/*
