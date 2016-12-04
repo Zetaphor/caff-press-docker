@@ -1,0 +1,18 @@
+version: '2'
+services:
+  mariadb:
+    image: bitnami/mariadb:latest
+    volumes:
+      - ./mariadb/data:/bitnami/mariadb
+
+  wordpress:
+    image: bitnami/wordpress:latest
+    depends_on:
+      - mariadb
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./wordpress/wordpress-data:/bitnami/wordpress
+      - ./wordpress/apache-data:/bitnami/apache
+      - ./wordpress/php-data:/bitnami/php

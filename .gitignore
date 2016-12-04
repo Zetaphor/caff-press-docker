@@ -1,7 +1,16 @@
-# Ignore the directory contents, so we don't commit the database
-redmine-mariadb/mariadb/*
+# Ignore the directory contents, so we don't commit the containers data
 # But keep the .gitkeep file, effectively keeping the directory
+redmine-mariadb/mariadb/*
 !redmine-mariadb/mariadb/.gitkeep
-
 redmine-mariadb/redmine/*
 !redmine-mariadb/redmine/.gitkeep
+
+owncloud-mariadb/owncloud/*
+!owncloud-mariadb/owncloud/.gitkeep
+owncloud-mariadb/mariadb/*
+!owncloud-mariadb/mariadb/.gitkeep
+
+wordpress-mariadb/wordpress/*
+!wordpress-mariadb/wordpress/.gitkeep
+wordpress-mariadb/mariadb/*
+!wordpress-mariadb/mariadb/.gitkeep
