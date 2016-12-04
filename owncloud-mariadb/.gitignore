@@ -1,0 +1,7 @@
+# Ignore the directory contents, so we don't commit the database
+owncloud-mariadb/mariadb/*
+# But keep the .gitkeep file, effectively keeping the directory
+!owncloud-mariadb/mariadb/.gitkeep
+
+owncloud-mariadb/owncloud/*
+!owncloud-mariadb/owncloud/.gitkeep

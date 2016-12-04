@@ -7,17 +7,17 @@ services:
     ports:
       - 8080:3000
     environment:
-      REDMINE_DB_MYSQL: mariadb
+      REDMINE_DB_MYSQL: redmine-mariadb
       REDMINE_DB_PASSWORD: example
     depends_on:
-      - mariadb
+      - redmine-mariadb
     restart: always
     volumes:
       - ./redmine/usr-src-redmine-files:/usr/src/redmine/files
 
 
-  mariadb:
-    image: mariadb
+  redmine-mariadb:
+    image: redmine-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: redmine
