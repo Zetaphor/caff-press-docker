@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+
+  # Redmine Application
+  redmine:
+    image: redmine
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_MYSQL: redmine-mariadb
+      REDMINE_DB_PASSWORD: example
+    depends_on:
+      - redmine-mariadb
+    restart: always
+    volumes:
+      - ./redmine/files:/usr/src/redmine/files
+
+  # Redmine MariaDB Server
+  redmine-mariadb:
+    image: redmine-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: redmine
+    restart: always
+    volumes:
+      - ./redmine/mariadb:/var/lib/mysql
+
+
+  # Wordpress Application
+  wordpress:
+    image: bitnami/wordpress:latest
+    depends_on:
+      - wordpress-mariadb
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./wordpress/wordpress-data:/bitnami/wordpress
+      - ./wordpress/apache-data:/bitnami/apache
+      - ./wordpress/php-data:/bitnami/php
+
+  # Wordpress MariaDB Server
+  wordpress-mariadb:
+    image: bitnami/mariadb:latest
+    volumes:
+      - ./wordpress/mariadb:/bitnami/mariadb
+
+
+  # ownCloud Application
+  owncloud:
+    image: owncloud
+    restart: always
+    depends_on:
+      - owncloud-mariadb
+    ports:
+      - 8181:80
+    volumes:
+      - ./owncloud/owncloud-data:/var/www/html/data
+      - ./owncloud/owncloud-config:/var/www/html/config
+      - ./owncloud/owncloud-apps:/var/www/html/apps2
+
+  # ownCloud MariaDB Server
+  owncloud-mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - ./owncloud/mariadb/:/var/lib/mysql
