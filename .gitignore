@@ -11,3 +11,6 @@ owncloud/*
 
 wordpress/*
 !wordpress/.gitkeep
+
+gitlab/*
+!gitlab/.gitkeep

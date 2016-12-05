@@ -9,7 +9,7 @@ Docker-compose configuration for Caffeinated Press.
 - [x] Wordpress
 - [x] ownCloud
 - [x] phpMyAdmin
-- [ ] Gitlab
+- [x] Gitlab
 - [ ] Discourse
 - [ ] Mail Server?
 

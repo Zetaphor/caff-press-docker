@@ -1,3 +1,8 @@
+# Do not use port 8080 for any of the containers, Gitlab uses this for its
+# internal instance of Unicorn
+#
+# ownCloud DB configuration will be prompted on first-run in browser
+
 version: '2'
 
 services:
@@ -13,12 +18,11 @@ services:
       - ./mariadb:/var/lib/mysql
 
 
-  # Redmine Application
   redmine:
     image: redmine
     container_name: redmine
     ports:
-      - 8080:3000
+      - 3000:3000
     environment:
       REDMINE_DB_MYSQL: mariadb
       REDMINE_DB_PASSWORD: root_password
@@ -29,7 +33,6 @@ services:
       - ./redmine/files:/usr/src/redmine/files
 
 
-  # Wordpress Application
   wordpress:
     image: bitnami/wordpress:latest
     container_name: wordpress
@@ -46,7 +49,6 @@ services:
       - ./wordpress/php-data:/bitnami/php
 
 
-  # ownCloud Application
   owncloud:
     image: owncloud
     container_name: owncloud
@@ -54,11 +56,24 @@ services:
     depends_on:
       - mariadb
     ports:
-      - 8181:80
+      - 3001:80
     volumes:
       - ./owncloud/owncloud-data:/var/www/html/data
       - ./owncloud/owncloud-config:/var/www/html/config
       - ./owncloud/owncloud-apps:/var/www/html/apps2
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    ports:
+      - 8443:443
+      - 22:22
+      - 3002:80
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/logs:/var/log/gitlab
+      - ./gitlab/data:/var/opt/gitlab
 
 
   phpmyadmin:
@@ -69,4 +84,4 @@ services:
        - PMA_HOSTS=mariadb
       restart: always
       ports:
-       - 8081:80
+       - 3003:80
