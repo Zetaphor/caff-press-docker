@@ -8,6 +8,7 @@ Docker-compose configuration for Caffeinated Press.
 - [x] Redmine
 - [x] Wordpress
 - [x] ownCloud
+- [x] phpMyAdmin
 - [ ] Discourse
 - [ ] Mail Server?
 
