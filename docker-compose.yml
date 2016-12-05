@@ -2,57 +2,57 @@ version: '2'
 
 services:
 
-  # Redmine Application
-  redmine:
-    image: redmine
-    ports:
-      - 8080:3000
+  mariadb:
+    image: mariadb
+    container_name: mariadb
     environment:
-      REDMINE_DB_MYSQL: redmine-mariadb
-      REDMINE_DB_PASSWORD: example
-    depends_on:
-      - redmine-mariadb
-    restart: always
-    volumes:
-      - ./redmine/files:/usr/src/redmine/files
-
-  # Redmine MariaDB Server
-  redmine-mariadb:
-    image: redmine-mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: redmine
     restart: always
     volumes:
-      - ./redmine/mariadb:/var/lib/mysql
+      - ./mariadb:/var/lib/mysql
+
+
+  # Redmine Application
+  redmine:
+    image: redmine
+    container_name: redmine
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_MYSQL: mariadb
+      REDMINE_DB_PASSWORD: root_password
+    depends_on:
+      - mariadb
+    restart: always
+    volumes:
+      - ./redmine/files:/usr/src/redmine/files
 
 
   # Wordpress Application
   wordpress:
     image: bitnami/wordpress:latest
+    container_name: wordpress
     depends_on:
-      - wordpress-mariadb
+      - mariadb
     ports:
       - '80:80'
       - '443:443'
+    environment:
+      MARIADB_PASSWORD: root_password
     volumes:
       - ./wordpress/wordpress-data:/bitnami/wordpress
       - ./wordpress/apache-data:/bitnami/apache
       - ./wordpress/php-data:/bitnami/php
 
-  # Wordpress MariaDB Server
-  wordpress-mariadb:
-    image: bitnami/mariadb:latest
-    volumes:
-      - ./wordpress/mariadb:/bitnami/mariadb
-
 
   # ownCloud Application
   owncloud:
     image: owncloud
+    container_name: owncloud
     restart: always
     depends_on:
-      - owncloud-mariadb
+      - mariadb
     ports:
       - 8181:80
     volumes:
@@ -60,11 +60,13 @@ services:
       - ./owncloud/owncloud-config:/var/www/html/config
       - ./owncloud/owncloud-apps:/var/www/html/apps2
 
-  # ownCloud MariaDB Server
-  owncloud-mariadb:
-    image: mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    volumes:
-      - ./owncloud/mariadb/:/var/lib/mysql
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      environment:
+       - PMA_ARBITRARY=1
+       - PMA_HOSTS=mariadb
+      restart: always
+      ports:
+       - 8081:80
