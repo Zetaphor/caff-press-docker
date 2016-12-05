@@ -10,3 +10,9 @@ Docker-compose configuration for Caffeinated Press.
 - [x] ownCloud
 - [ ] Discourse
 - [ ] Mail Server?
+
+#### Additional Requirements
+
+- [ ] SSL (LE)
+- [ ] SSO
+- [ ] Domain Binding (w/subdomains)
