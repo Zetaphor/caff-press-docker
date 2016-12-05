@@ -10,7 +10,7 @@ Docker-compose configuration for Caffeinated Press.
 - [x] ownCloud
 - [x] phpMyAdmin
 - [x] Gitlab
-- [ ] Discourse
+- [ ] Discourse ([May have to use separate package](https://github.com/discourse/discourse_docker))
 - [ ] Mail Server?
 
 #### Additional Requirements
