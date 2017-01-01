@@ -11,7 +11,7 @@ Docker-compose configuration for Caffeinated Press.
 - [x] phpMyAdmin
 - [x] Gitlab
 - [ ] Discourse ([May have to use separate package](https://github.com/discourse/discourse_docker))
-- [ ] Mail Server?
+- [ ] Mail Server? ([Mailcow](https://github.com/andryyy/mailcow-dockerized), [Modoba](http://modoboa.org/en/), [Mail-In-A-Box](https://mailinabox.email/))
 
 #### Additional Requirements
 
